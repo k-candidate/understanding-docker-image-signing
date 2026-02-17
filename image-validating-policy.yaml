@@ -1,0 +1,36 @@
+apiVersion: policies.kyverno.io/v1
+kind: ImageValidatingPolicy
+metadata:
+  name: verify-image-signature
+spec:
+  validationActions: [Deny]
+  matchConstraints:
+    resourceRules:
+    - apiGroups: [""]
+      apiVersions: ["v1"]
+      operations: ["CREATE", "UPDATE"]
+      resources: ["pods"]
+    namespaceSelector:
+      matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: In
+        values: [demo]
+  matchImageReferences:
+  - glob: "kcandidate/*"
+  attestors:
+  - name: cosign
+    cosign:
+      key:
+        data: |
+          -----BEGIN PUBLIC KEY-----
+          MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEsIEmYiqC7fAbm2qMMVLfQ9pKtvOx
+          XNWTWIgqtB1a2kHotrA0Y8xV5WBFBdKJj3avos7aozMfzLlByeLnLK0AYg==
+          -----END PUBLIC KEY-----
+      ctlog:
+        url: https://rekor.sigstore.dev
+        insecureIgnoreTlog: true
+        insecureIgnoreSCT: true
+  validations:
+  - expression: >-
+      images.containers.map(image, verifyImageSignatures(image, [attestors.cosign])).all(e, e > 0)
+    message: Image signature verification failed

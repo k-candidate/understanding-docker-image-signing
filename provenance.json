@@ -1,0 +1,220 @@
+{
+  "SLSA": {
+    "buildConfig": {
+      "digestMapping": {
+        "sha256:06ba7eab5d1febc69398d00e4ba9526e70a82ce40e02c35ea92fc80a0c709e8e": "step2",
+        "sha256:4bb73655bf420a629174fa44a86e2dd60cdfcc8e1e6a6728a913ad85affeb8b0": "step0",
+        "sha256:eac99d68f180b2eb6ec6e6904b52d3a65fddd8578ddbf6ac8ff3e95d5f666f1b": "step1"
+      },
+      "llbDefinition": [
+        {
+          "id": "step0",
+          "op": {
+            "Op": {
+              "source": {
+                "identifier": "docker-image://docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659"
+              }
+            },
+            "constraints": {},
+            "platform": {
+              "Architecture": "amd64",
+              "OS": "linux"
+            }
+          }
+        },
+        {
+          "id": "step1",
+          "inputs": [
+            "step0:0"
+          ],
+          "op": {
+            "Op": {
+              "exec": {
+                "meta": {
+                  "args": [
+                    "/bin/sh",
+                    "-c",
+                    "echo \"This image will be signed\""
+                  ],
+                  "cwd": "/",
+                  "env": [
+                    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                  ],
+                  "removeMountStubsRecursive": true
+                },
+                "mounts": [
+                  {
+                    "dest": "/"
+                  }
+                ]
+              }
+            },
+            "constraints": {},
+            "platform": {
+              "Architecture": "amd64",
+              "OS": "linux"
+            }
+          }
+        },
+        {
+          "id": "step2",
+          "inputs": [
+            "step1:0"
+          ],
+          "op": {
+            "Op": {}
+          }
+        }
+      ]
+    },
+    "buildType": "https://mobyproject.org/buildkit@v1",
+    "builder": {
+      "id": ""
+    },
+    "invocation": {
+      "configSource": {
+        "entryPoint": "Dockerfile.signed"
+      },
+      "environment": {
+        "platform": "linux/amd64"
+      },
+      "parameters": {
+        "frontend": "dockerfile.v0",
+        "locals": [
+          {
+            "name": "context"
+          },
+          {
+            "name": "dockerfile"
+          }
+        ]
+      }
+    },
+    "materials": [
+      {
+        "digest": {
+          "sha256": "25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659"
+        },
+        "uri": "pkg:docker/alpine@latest?platform=linux%2Famd64"
+      }
+    ],
+    "metadata": {
+      "buildFinishedOn": "2026-02-16T18:07:31.690929852Z",
+      "buildInvocationID": "mezduoy0204t9qitzcyq0hnob",
+      "buildStartedOn": "2026-02-16T18:07:30.866059199Z",
+      "completeness": {
+        "environment": true,
+        "materials": false,
+        "parameters": true
+      },
+      "https://mobyproject.org/buildkit@v1#metadata": {
+        "layers": {
+          "step0:0": [
+            [
+              {
+                "digest": "sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153",
+                "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                "size": 3861821
+              }
+            ]
+          ],
+          "step1:0": [
+            [
+              {
+                "digest": "sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153",
+                "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                "size": 3861821
+              },
+              {
+                "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+                "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                "size": 32
+              }
+            ]
+          ]
+        },
+        "source": {
+          "infos": [
+            {
+              "data": "RlJPTSBhbHBpbmU6bGF0ZXN0ClJVTiBlY2hvICJUaGlzIGltYWdlIHdpbGwgYmUgc2lnbmVkIgpDTUQgWyJzaCIsICItYyIsICJlY2hvICdTaWduZWQgaW1hZ2UgcnVubmluZycgJiYgc2xlZXAgaW5maW5pdHkiXQo=",
+              "digestMapping": {
+                "sha256:3752425f5962b7b70ab956dc32142221043035e0bab1b6d0ffdb85e57ad95295": "step1",
+                "sha256:c9f31987e5702a5409255c655aa5de9cd460c6be5e425231d86b0b2a961a34a3": "step0"
+              },
+              "filename": "Dockerfile.signed",
+              "language": "Dockerfile",
+              "llbDefinition": [
+                {
+                  "id": "step0",
+                  "op": {
+                    "Op": {
+                      "source": {
+                        "attrs": {
+                          "local.differ": "none",
+                          "local.followpaths": "[\"Dockerfile.signed\",\"Dockerfile.signed.dockerignore\"]",
+                          "local.sharedkeyhint": "dockerfile"
+                        },
+                        "identifier": "local://dockerfile"
+                      }
+                    },
+                    "constraints": {}
+                  }
+                },
+                {
+                  "id": "step1",
+                  "inputs": [
+                    "step0:0"
+                  ],
+                  "op": {
+                    "Op": {}
+                  }
+                }
+              ]
+            }
+          ],
+          "locations": {
+            "step0": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "end": {
+                        "line": 1
+                      },
+                      "start": {
+                        "line": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step1": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "end": {
+                        "line": 2
+                      },
+                      "start": {
+                        "line": 2
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "vcs": {
+          "localdir:context": ".",
+          "localdir:dockerfile": ".",
+          "revision": "f3b67172a981be21f812e992140104eaa10d0e4a",
+          "source": "git@github.com:k-candidate/understanding-docker-image-signing.git"
+        }
+      },
+      "reproducible": false
+    }
+  }
+}

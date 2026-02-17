@@ -1,0 +1,3 @@
+FROM ubuntu:latest
+RUN echo "This image will NOT be signed"
+CMD ["sh", "-c", "echo 'Unsigned image running' && sleep infinity"]

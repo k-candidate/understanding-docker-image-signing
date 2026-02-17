@@ -1,0 +1,220 @@
+{
+  "SLSA": {
+    "buildConfig": {
+      "digestMapping": {
+        "sha256:01b77508e55d0555849be6841323709bbf09fbe015eda2d5d29e44962af7fb90": "step0",
+        "sha256:0dc10ddedd17e8cdf3c82e1118db35493566f653e5027806a55cba20c4f1786f": "step2",
+        "sha256:e866e909cbeb31735f8ecc2a84b319cec360b71f2b8e72b727c5025ee33d3c39": "step1"
+      },
+      "llbDefinition": [
+        {
+          "id": "step0",
+          "op": {
+            "Op": {
+              "source": {
+                "identifier": "docker-image://docker.io/library/alpine:3.23.2@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+              }
+            },
+            "constraints": {},
+            "platform": {
+              "Architecture": "amd64",
+              "OS": "linux"
+            }
+          }
+        },
+        {
+          "id": "step1",
+          "inputs": [
+            "step0:0"
+          ],
+          "op": {
+            "Op": {
+              "exec": {
+                "meta": {
+                  "args": [
+                    "/bin/sh",
+                    "-c",
+                    "echo \"vulnerable\""
+                  ],
+                  "cwd": "/",
+                  "env": [
+                    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                  ],
+                  "removeMountStubsRecursive": true
+                },
+                "mounts": [
+                  {
+                    "dest": "/"
+                  }
+                ]
+              }
+            },
+            "constraints": {},
+            "platform": {
+              "Architecture": "amd64",
+              "OS": "linux"
+            }
+          }
+        },
+        {
+          "id": "step2",
+          "inputs": [
+            "step1:0"
+          ],
+          "op": {
+            "Op": {}
+          }
+        }
+      ]
+    },
+    "buildType": "https://mobyproject.org/buildkit@v1",
+    "builder": {
+      "id": ""
+    },
+    "invocation": {
+      "configSource": {
+        "entryPoint": "Dockerfile.vuln"
+      },
+      "environment": {
+        "platform": "linux/amd64"
+      },
+      "parameters": {
+        "frontend": "dockerfile.v0",
+        "locals": [
+          {
+            "name": "context"
+          },
+          {
+            "name": "dockerfile"
+          }
+        ]
+      }
+    },
+    "materials": [
+      {
+        "digest": {
+          "sha256": "865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+        },
+        "uri": "pkg:docker/alpine@3.23.2?platform=linux%2Famd64"
+      }
+    ],
+    "metadata": {
+      "buildFinishedOn": "2026-02-16T18:18:00.093776803Z",
+      "buildInvocationID": "uiaqhjumzob23an5j4jeh2zbs",
+      "buildStartedOn": "2026-02-16T18:17:56.884123087Z",
+      "completeness": {
+        "environment": true,
+        "materials": false,
+        "parameters": true
+      },
+      "https://mobyproject.org/buildkit@v1#metadata": {
+        "layers": {
+          "step0:0": [
+            [
+              {
+                "digest": "sha256:1074353eec0db2c1d81d5af2671e56e00cf5738486f5762609ea33d606f88612",
+                "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                "size": 3860104
+              }
+            ]
+          ],
+          "step1:0": [
+            [
+              {
+                "digest": "sha256:1074353eec0db2c1d81d5af2671e56e00cf5738486f5762609ea33d606f88612",
+                "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                "size": 3860104
+              },
+              {
+                "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+                "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+                "size": 32
+              }
+            ]
+          ]
+        },
+        "source": {
+          "infos": [
+            {
+              "data": "RlJPTSBhbHBpbmU6My4yMy4yClJVTiBlY2hvICJ2dWxuZXJhYmxlIg==",
+              "digestMapping": {
+                "sha256:a46bdec84356a4d36c1ddaa12a5b2dd9a73f5d34faf6457e2b4bf56b18f09d3f": "step0",
+                "sha256:a7ec16c597b2ce0cec2b5d650b197f5170bfa09be2e46faf6e5881856cbb7e7d": "step1"
+              },
+              "filename": "Dockerfile.vuln",
+              "language": "Dockerfile",
+              "llbDefinition": [
+                {
+                  "id": "step0",
+                  "op": {
+                    "Op": {
+                      "source": {
+                        "attrs": {
+                          "local.differ": "none",
+                          "local.followpaths": "[\"Dockerfile.vuln\",\"Dockerfile.vuln.dockerignore\"]",
+                          "local.sharedkeyhint": "dockerfile"
+                        },
+                        "identifier": "local://dockerfile"
+                      }
+                    },
+                    "constraints": {}
+                  }
+                },
+                {
+                  "id": "step1",
+                  "inputs": [
+                    "step0:0"
+                  ],
+                  "op": {
+                    "Op": {}
+                  }
+                }
+              ]
+            }
+          ],
+          "locations": {
+            "step0": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "end": {
+                        "line": 1
+                      },
+                      "start": {
+                        "line": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "step1": {
+              "locations": [
+                {
+                  "ranges": [
+                    {
+                      "end": {
+                        "line": 2
+                      },
+                      "start": {
+                        "line": 2
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "vcs": {
+          "localdir:context": ".",
+          "localdir:dockerfile": ".",
+          "revision": "f3b67172a981be21f812e992140104eaa10d0e4a",
+          "source": "git@github.com:k-candidate/understanding-docker-image-signing.git"
+        }
+      },
+      "reproducible": false
+    }
+  }
+}
